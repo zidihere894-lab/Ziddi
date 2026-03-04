@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZIDDI HACKS – Premium Instagram Downloader</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--c1:#0a0a12;
+--c2:#0e0e1c;
+--accent:#7f5af0;
+--accent2:#2cb67d;
+--pink:#ff4ecd;
+--neon:#00f5d4;
+--glass:rgba(255,255,255,0.04);
+--glass-border:rgba(255,255,255,0.08);
+--text:#e8e8f0;
+--muted:#6e6e8a;
+--font-display:'Syne',sans-serif;
+--font-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--c1);color:var(--text);font-family:var(--font-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--c1)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+/* BG GRID */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(127,90,240,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(127,90,240,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+
+/* NOISE OVERLAY */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
+
+/* AMBIENT ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(127,90,240,0.15),transparent 70%);top:-200px;right:-100px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,rgba(0,245,212,0.08),transparent 70%);bottom:20%;left:-150px}
+.orb3{width:400px;height:400px;background:radial-gradient(circle,rgba(255,78,205,0.07),transparent 70%);top:60%;right:10%}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--glass-border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,10,18,0.7)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--neon));border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(127,90,240,0.5)}
+.nav-logo-icon svg{width:18px;height:18px;fill:white}
+.nav-logo-text{font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.05em;background:linear-gradient(90deg,#fff,var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:80px 5% 40px;position:relative;z-index:1}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1200px;margin:0 auto;gap:40px}
+.hero-left{flex:1;min-width:0}
+.hero-right{flex:0 0 auto;width:42%;display:flex;align-items:center;justify-content:center}
+
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:0.2em;color:var(--neon);text-transform:uppercase;margin-bottom:16px;padding:5px 12px;border:1px solid rgba(0,245,212,0.2);border-radius:100px;background:rgba(0,245,212,0.05)}
+.hero-label-dot{width:6px;height:6px;border-radius:50%;background:var(--neon);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+
+.hero-brand{font-family:var(--font-display);font-size:clamp(52px,8vw,90px);font-weight:800;line-height:0.95;letter-spacing:-0.02em;margin-bottom:20px;position:relative}
+.hero-brand-line{display:block;overflow:hidden}
+.hero-brand-word{display:inline-block;background:linear-gradient(135deg,#fff 0%,var(--accent) 40%,var(--neon) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(127,90,240,0.4))}
+.hero-brand-word2{display:inline-block;background:linear-gradient(135deg,var(--neon),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-headline{font-family:var(--font-display);font-size:clamp(18px,2.8vw,28px);font-weight:600;line-height:1.3;color:#c8c8e0;margin-bottom:16px;letter-spacing:-0.01em}
+.hero-desc{font-size:clamp(13px,1.5vw,15px);line-height:1.7;color:var(--muted);max-width:440px;margin-bottom:28px}
+
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--neon));color:white;font-family:var(--font-display);font-weight:700;font-size:14px;letter-spacing:0.05em;text-decoration:none;position:relative;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s ease;box-shadow:0 0 30px rgba(127,90,240,0.4),0 4px 20px rgba(0,0,0,0.3);cursor:pointer;border:none}
+.hero-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);opacity:0;transition:opacity 0.3s}
+.hero-cta:hover::before{opacity:1}
+.hero-cta:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 50px rgba(127,90,240,0.6),0 8px 30px rgba(0,0,0,0.4)}
+.hero-cta svg{width:16px;height:16px;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.hero-cta:hover svg{transform:translateX(4px)}
+
+/* SOLO IMAGE */
+.hero-image-wrap{position:relative;width:100%;max-width:380px}
+.hero-image-glow{position:absolute;inset:-30px;background:radial-gradient(ellipse,rgba(127,90,240,0.25),rgba(0,245,212,0.1) 50%,transparent 70%);border-radius:50%;animation:glow-pulse 4s ease-in-out infinite;z-index:0}
+@keyframes glow-pulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.hero-image-wrap img{position:relative;z-index:1;width:100%;height:auto;object-fit:contain;animation:float 6s ease-in-out infinite;filter:drop-shadow(0 20px 60px rgba(127,90,240,0.5)) drop-shadow(0 0 30px rgba(0,245,212,0.2))}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}33%{transform:translateY(-18px) rotate(1deg)}66%{transform:translateY(-8px) rotate(-0.5deg)}}
+
+/* SECTION BASE */
+section{position:relative;z-index:1}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 5%}
+
+/* SECTION HEADER */
+.sec-header{text-align:center;margin-bottom:48px}
+.sec-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);padding:4px 14px;border:1px solid rgba(127,90,240,0.3);border-radius:100px;margin-bottom:14px;background:rgba(127,90,240,0.06)}
+.sec-title{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;background:linear-gradient(135deg,#fff 30%,var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* FEATURES */
+.features{padding:60px 0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+
+.feat-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:28px 24px;position:relative;overflow:hidden;cursor:default;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),border-color 0.3s,box-shadow 0.3s}
+.feat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.06),transparent 60%);opacity:0;transition:opacity 0.4s;border-radius:20px}
+.feat-card:hover{transform:translateY(-6px) scale(1.01);border-color:rgba(127,90,240,0.4);box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 0 1px rgba(127,90,240,0.2) inset,0 0 40px rgba(127,90,240,0.1)}
+.feat-card:hover::before{opacity:1}
+
+.feat-icon{width:48px;height:48px;margin-bottom:16px;position:relative}
+.feat-icon svg{width:48px;height:48px;transition:filter 0.3s}
+.feat-card:hover .feat-icon svg{filter:drop-shadow(0 0 12px currentColor)}
+
+.feat-name{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:8px;color:#fff}
+.feat-desc{font-size:13px;line-height:1.6;color:var(--muted)}
+
+/* WHY CHOOSE */
+.why{padding:60px 0}
+.why-blocks{display:flex;gap:20px;align-items:stretch}
+.why-block{flex:1;background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:28px 24px;text-align:center;position:relative;overflow:hidden;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s}
+.why-block::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:2px;border-radius:2px;opacity:0;transition:opacity 0.3s}
+.why-block:nth-child(1)::after{background:linear-gradient(90deg,transparent,var(--neon),transparent)}
+.why-block:nth-child(2)::after{background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.why-block:nth-child(3)::after{background:linear-gradient(90deg,transparent,var(--pink),transparent)}
+.why-block:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+.why-block:hover::after{opacity:1}
+
+.why-icon{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;display:flex;align-items:center;justify-content:center}
+.why-block:nth-child(1) .why-icon{background:rgba(0,245,212,0.1);box-shadow:0 0 20px rgba(0,245,212,0.15)}
+.why-block:nth-child(2) .why-icon{background:rgba(127,90,240,0.1);box-shadow:0 0 20px rgba(127,90,240,0.15)}
+.why-block:nth-child(3) .why-icon{background:rgba(255,78,205,0.1);box-shadow:0 0 20px rgba(255,78,205,0.15)}
+.why-icon svg{width:28px;height:28px}
+.why-title{font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:10px;color:#fff}
+.why-text{font-size:13px;line-height:1.6;color:var(--muted)}
+
+/* HOW IT WORKS */
+.how{padding:60px 0}
+.how-steps{display:flex;align-items:flex-start;position:relative;gap:0}
+.how-connector{position:absolute;top:28px;left:calc(16.67% + 12px);right:calc(16.67% + 12px);height:2px;background:rgba(255,255,255,0.06);overflow:hidden}
+.how-connector-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--neon));transition:width 1.2s cubic-bezier(0.65,0,0.35,1);border-radius:2px}
+.how-connector-fill.filled{width:100%}
+
+.how-step{flex:1;text-align:center;padding:0 16px;position:relative;z-index:1}
+.how-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:var(--font-display);font-weight:800;font-size:20px;position:relative}
+.how-step:nth-child(1) .how-num{background:linear-gradient(135deg,var(--accent),var(--neon));color:white;box-shadow:0 0 30px rgba(127,90,240,0.5)}
+.how-step:nth-child(2) .how-num{background:linear-gradient(135deg,var(--neon),var(--accent2));color:white;box-shadow:0 0 30px rgba(0,245,212,0.4)}
+.how-step:nth-child(3) .how-num{background:linear-gradient(135deg,var(--pink),var(--accent));color:white;box-shadow:0 0 30px rgba(255,78,205,0.4)}
+
+.how-step-title{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:8px;color:#fff}
+.how-step-desc{font-size:13px;line-height:1.6;color:var(--muted)}
+
+.how-step-icon{width:36px;height:36px;margin:0 auto 10px;opacity:0.7}
+.how-step-icon svg{width:36px;height:36px}
+
+/* FINAL CTA */
+.final-cta{padding:60px 0 70px}
+.cta-box{background:linear-gradient(135deg,rgba(127,90,240,0.12),rgba(0,245,212,0.06));border:1px solid rgba(127,90,240,0.25);border-radius:28px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(127,90,240,0.1) inset,0 30px 80px rgba(0,0,0,0.4)}
+.cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,rgba(127,90,240,0.05) 60deg,transparent 120deg);animation:spin-slow 12s linear infinite;pointer-events:none}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+.cta-box-title{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-0.02em;margin-bottom:14px;background:linear-gradient(135deg,#fff,var(--neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cta-box-sub{font-size:15px;color:var(--muted);margin-bottom:32px}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--neon));color:white;font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:0.05em;text-decoration:none;position:relative;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s;box-shadow:0 0 40px rgba(127,90,240,0.5),0 6px 25px rgba(0,0,0,0.4)}
+.cta-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 0 70px rgba(127,90,240,0.7),0 10px 40px rgba(0,0,0,0.5)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--glass-border);padding:24px 5%;text-align:center;font-size:12px;color:var(--muted);position:relative;z-index:1}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(40px) scale(0.97);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0) scale(1)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-5{transition-delay:0.5s}
+
+/* WORD SPLIT */
+.word-reveal .word{display:inline-block;overflow:hidden}
+.word-reveal .word-inner{display:inline-block;transform:translateY(100%);opacity:0;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1),opacity 0.6s cubic-bezier(0.16,1,0.3,1)}
+.word-reveal.visible .word-inner{transform:translateY(0);opacity:1}
+
+/* MAGNETIC */
+.magnetic{transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+
+/* PARALLAX DATA */
+[data-parallax]{will-change:transform}
+
+/* TEXT SHIMMER on brand */
+.hero-brand-word{animation:shimmer-text 4s ease-in-out infinite}
+@keyframes shimmer-text{0%,100%{filter:drop-shadow(0 0 20px rgba(127,90,240,0.4))}50%{filter:drop-shadow(0 0 40px rgba(0,245,212,0.6))}}
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    </div>
+    <span class="nav-logo-text">ZIDDI HACKS</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-label reveal">
+        <span class="hero-label-dot"></span>
+        WELCOME ZIDDI IGD ZH
+      </div>
+
+      <div class="hero-brand">
+        <span class="hero-brand-line">
+          <span class="hero-brand-word reveal reveal-delay-1">IGD</span>
+        </span>
+        <span class="hero-brand-line">
+          <span class="hero-brand-word2 reveal reveal-delay-2">ZH</span>
+        </span>
+      </div>
+
+      <h1 class="hero-headline reveal reveal-delay-2">Download Instagram<br>Reels &amp; Posts Instantly</h1>
+      <p class="hero-desc reveal reveal-delay-3">The fastest, cleanest tool to download any Instagram media. No login. No limits. Zero compromise on quality or speed.</p>
+
+      <a href="app.html" class="hero-cta magnetic reveal reveal-delay-4">
+        Start Downloading
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-right reveal reveal-delay-2">
+      <div class="hero-image-wrap">
+        <div class="hero-image-glow"></div>
+        <img src="solo.png" alt="IGD OX Preview" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Capabilities</div>
+      <h2 class="sec-title">Everything You Need</h2>
+    </div>
+    <div class="features-grid">
+
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="#7f5af0" stroke-width="1.5" opacity="0.3"/>
+            <path d="M16 24L24 16L32 24" stroke="#7f5af0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 16V36" stroke="#00f5d4" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 36H34" stroke="#7f5af0" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="3" fill="#7f5af0" opacity="0.5">
+              <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div class="feat-name">Fast Download</div>
+        <div class="feat-desc">Downloads complete in seconds. Optimized pipeline with zero queue delays.</div>
+      </div>
+
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="10" width="36" height="28" rx="4" stroke="#00f5d4" stroke-width="1.5"/>
+            <path d="M14 28L20 22L26 26L34 18" stroke="#00f5d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="stroke-dasharray" values="0 60;60 0" dur="2s" fill="freeze" begin="0s"/>
+            </path>
+            <circle cx="34" cy="18" r="3" fill="#00f5d4" opacity="0.6"/>
+            <text x="24" y="42" font-size="7" fill="#00f5d4" opacity="0.5" text-anchor="middle" font-family="monospace">HD</text>
+          </svg>
+        </div>
+        <div class="feat-name">HD Quality</div>
+        <div class="feat-desc">Original resolution preserved. No compression, no watermarks. Pure quality.</div>
+      </div>
+
+      <div class="feat-card reveal reveal-delay-3">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="20" width="20" height="18" rx="3" stroke="#ff4ecd" stroke-width="1.5"/>
+            <path d="M18 20V16C18 12.69 20.69 10 24 10C27.31 10 30 12.69 30 16V20" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="29" r="3" fill="#ff4ecd" opacity="0.5">
+              <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <path d="M24 29V33" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="feat-name">No Login Required</div>
+        <div class="feat-desc">No account, no sign-up. Just paste and download. Complete anonymity.</div>
+      </div>
+
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 8L28.5 18H40L31 25L34.5 36L24 30L13.5 36L17 25L8 18H19.5L24 8Z" stroke="#2cb67d" stroke-width="1.5" stroke-linejoin="round" fill="rgba(44,182,125,0.1)"/>
+            <path d="M24 8L28.5 18H40L31 25L34.5 36L24 30L13.5 36L17 25L8 18H19.5L24 8Z" stroke="#2cb67d" stroke-width="1.5" stroke-linejoin="round" opacity="0.4">
+              <animateTransform attributeName="transform" type="rotate" from="0 24 24" to="360 24 24" dur="8s" repeatCount="indefinite"/>
+            </path>
+          </svg>
+        </div>
+        <div class="feat-name">100% Free</div>
+        <div class="feat-desc">No hidden fees, no premium tiers. Forever free for every user.</div>
+      </div>
+
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 6L10 12V24C10 32.84 16.08 41.08 24 44C31.92 41.08 38 32.84 38 24V12L24 6Z" stroke="#7f5af0" stroke-width="1.5" stroke-linejoin="round" fill="rgba(127,90,240,0.08)"/>
+            <path d="M18 24L22 28L30 20" stroke="#00f5d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <animate attributeName="stroke-dasharray" values="0 20;20 0" dur="1s" fill="freeze"/>
+            </path>
+          </svg>
+        </div>
+        <div class="feat-name">Secure</div>
+        <div class="feat-desc">Encrypted requests. Your activity stays private. No data stored ever.</div>
+      </div>
+
+      <div class="feat-card reveal reveal-delay-3">
+        <div class="feat-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 14H38" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round"/>
+            <path d="M10 22H34" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <path d="M10 30H30" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+            <circle cx="38" cy="34" r="8" fill="rgba(255,78,205,0.15)" stroke="#ff4ecd" stroke-width="1.5"/>
+            <path d="M35 34L37.5 36.5L41 32" stroke="#ff4ecd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="feat-name">Unlimited Downloads</div>
+        <div class="feat-desc">No daily caps, no cooldowns. Download as much as you want, forever.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section class="why">
+  <div class="section-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Advantages</div>
+      <h2 class="sec-title">Why Choose IGD ZH</h2>
+    </div>
+    <div class="why-blocks" data-parallax>
+      <div class="why-block reveal reveal-delay-1">
+        <div class="why-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 4L17 12H24L18.5 16.5L21 24L14 20L7 24L9.5 16.5L4 12H11L14 4Z" fill="#00f5d4" opacity="0.8"/>
+            <path d="M14 4L17 12H24L18.5 16.5L21 24L14 20L7 24L9.5 16.5L4 12H11L14 4Z" stroke="#00f5d4" stroke-width="1" stroke-linejoin="round" fill="none">
+              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+            </path>
+          </svg>
+        </div>
+        <div class="why-title">Lightning Speed</div>
+        <div class="why-text">Sub-second processing. Our edge-optimized backend delivers your media before you blink.</div>
+      </div>
+      <div class="why-block reveal reveal-delay-2">
+        <div class="why-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="10" stroke="#7f5af0" stroke-width="1.5"/>
+            <path d="M10 14L13 17L18 11" stroke="#7f5af0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="14" cy="14" r="5" stroke="#7f5af0" stroke-width="1" opacity="0.3">
+              <animate attributeName="r" values="5;9;5" dur="2.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0;0.3" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div class="why-title">Zero Ads</div>
+        <div class="why-text">Clean experience. No pop-ups, no redirects, no trackers. What you see is what you get.</div>
+      </div>
+      <div class="why-block reveal reveal-delay-3">
+        <div class="why-icon">
+          <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="6" width="20" height="16" rx="3" stroke="#ff4ecd" stroke-width="1.5"/>
+            <path d="M9 11H19" stroke="#ff4ecd" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9 15H15" stroke="#ff4ecd" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="21" cy="19" r="5" fill="#ff4ecd" stroke="#ff4ecd" stroke-width="0.5"/>
+            <path d="M18.5 19L20.5 21L23.5 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="why-title">Clean UI</div>
+        <div class="why-text">Distraction-free. Every element has purpose. Designed for speed and clarity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-inner">
+    <div class="sec-header reveal">
+      <div class="sec-tag">Process</div>
+      <h2 class="sec-title">How It Works</h2>
+    </div>
+    <div class="how-steps" id="howSteps">
+      <div class="how-connector">
+        <div class="how-connector-fill" id="connectorFill"></div>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-num">1</div>
+        <div class="how-step-title">Copy Link</div>
+        <div class="how-step-desc">Open Instagram, tap Share on any Reel or post, copy the link to clipboard.</div>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-num">2</div>
+        <div class="how-step-title">Paste Link</div>
+        <div class="how-step-desc">Open IGD ZH tool, paste the link into the input field and hit Fetch.</div>
+      </div>
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-num">3</div>
+        <div class="how-step-title">Download</div>
+        <div class="how-step-desc">Preview your media, click Download and it saves instantly to your device.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-inner">
+    <div class="cta-box reveal">
+      <h2 class="cta-box-title">Start Downloading Now</h2>
+      <p class="cta-box-sub">Join thousands who trust IGD ZH every day. Free, fast, forever.</p>
+      <a href="app.html" class="cta-btn magnetic">
+        Launch Tool
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by ZIDDI HACKS &mdash; IGD ZH Premium Instagram Downloader</p>
+</footer>
+
+<script>
+// INTERSECTION OBSERVER - SCROLL REVEAL (up + down)
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => revealObs.observe(el));
+
+// CONNECTOR FILL
+const connectorObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const fill = document.getElementById('connectorFill');
+    if (entry.isIntersecting) {
+      fill.classList.add('filled');
+    } else {
+      fill.classList.remove('filled');
+    }
+  });
+}, { threshold: 0.5 });
+const howEl = document.getElementById('howSteps');
+if (howEl) connectorObs.observe(howEl);
+
+// MAGNETIC HOVER
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.03)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// PARALLAX on scroll
+const parallaxEls = document.querySelectorAll('[data-parallax]');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const sy = window.scrollY;
+      parallaxEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const vy = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.04;
+        el.style.transform = `translateY(${vy}px)`;
+      });
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// HERO INITIAL REVEAL
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 120);
+    });
+  }, 100);
+});
+</script>
+</body>
+</html>
